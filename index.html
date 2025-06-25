@@ -5,23 +5,38 @@
     <title>Shukran Shop</title>
     <style>
         body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
-        button { padding: 10px 20px; font-size: 16px; cursor: pointer; margin-top: 20px; }
+        .product { border: 1px solid #ddd; padding: 10px; margin: 10px; display: inline-block; }
+        button { padding: 5px 10px; font-size: 14px; cursor: pointer; }
     </style>
 </head>
 <body>
     <h1>Добро пожаловать в Shukran Shop!</h1>
-    <p>Товар: AirPods 3</p>
-    <p>Цена: 1 750 000 сум</p>
-    <button onclick="sendOrder()">Оформить заказ</button>
+
+    <div class="product">
+        <h3>AirPods 3</h3>
+        <p>Цена: 1 750 000 сум</p>
+        <button onclick="sendOrder('AirPods 3 - 1 750 000 сум')">Добавить в корзину</button>
+    </div>
+
+    <div class="product">
+        <h3>iPhone 14</h3>
+        <p>Цена: 12 500 000 сум</p>
+        <button onclick="sendOrder('iPhone 14 - 12 500 000 сум')">Добавить в корзину</button>
+    </div>
+
+    <div class="product">
+        <h3>MacBook Pro</h3>
+        <p>Цена: 24 000 000 сум</p>
+        <button onclick="sendOrder('MacBook Pro - 24 000 000 сум')">Добавить в корзину</button>
+    </div>
 
     <script>
-        // Telegram Web App SDK
         const tg = window.Telegram.WebApp;
-        tg.expand(); // разворачивает окно на весь экран
+        tg.expand();
 
-        function sendOrder() {
-            tg.sendData('AirPods 3 — 1 750 000 сум'); // отправляем заказ в бота
-            tg.close(); // закрываем Web App
+        function sendOrder(product) {
+            tg.sendData(product);
+            tg.close();
         }
     </script>
 </body>

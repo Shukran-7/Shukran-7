@@ -7,6 +7,7 @@
         body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
         .product { border: 1px solid #ddd; padding: 10px; margin: 10px; display: inline-block; }
         button { padding: 5px 10px; font-size: 14px; cursor: pointer; }
+        #cart { margin-top: 20px; }
     </style>
 </head>
 <body>
@@ -15,27 +16,55 @@
     <div class="product">
         <h3>AirPods 3</h3>
         <p>Цена: 1 750 000 сум</p>
-        <button onclick="sendOrder('AirPods 3 - 1 750 000 сум')">Добавить в корзину</button>
+        <button onclick="addToCart('AirPods 3 - 1 750 000 сум')">Добавить в корзину</button>
     </div>
 
     <div class="product">
         <h3>iPhone 14</h3>
         <p>Цена: 12 500 000 сум</p>
-        <button onclick="sendOrder('iPhone 14 - 12 500 000 сум')">Добавить в корзину</button>
+        <button onclick="addToCart('iPhone 14 - 12 500 000 сум')">Добавить в корзину</button>
     </div>
 
     <div class="product">
         <h3>MacBook Pro</h3>
         <p>Цена: 24 000 000 сум</p>
-        <button onclick="sendOrder('MacBook Pro - 24 000 000 сум')">Добавить в корзину</button>
+        <button onclick="addToCart('MacBook Pro - 24 000 000 сум')">Добавить в корзину</button>
+    </div>
+
+    <div id="cart">
+        <h3>Корзина:</h3>
+        <ul id="cartItems"></ul>
+        <button onclick="sendOrder()">Оформить заказ</button>
     </div>
 
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        function sendOrder(product) {
-            tg.sendData(product);
+        let cart = [];
+
+        function addToCart(product) {
+            cart.push(product);
+            updateCartDisplay();
+        }
+
+        function updateCartDisplay() {
+            const cartList = document.getElementById('cartItems');
+            cartList.innerHTML = '';
+            cart.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                cartList.appendChild(li);
+            });
+        }
+
+        function sendOrder() {
+            if (cart.length === 0) {
+                alert('Ваша корзина пуста!');
+                return;
+            }
+            const order = cart.join(' | ');
+            tg.sendData(order);
             tg.close();
         }
     </script>
